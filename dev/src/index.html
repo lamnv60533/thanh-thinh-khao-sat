@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230E4D52'/%3E%3Cpath d='M8 16.5l5.2 5.2L24 10.8' fill='none' stroke='%23F2B01E' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<title>Phiếu khảo sát nhu cầu ứng dụng trợ lý AI | Hóa chất Thành Thịnh</title>
+<style>
+/*__FONTS__*/
+:root{
+  --pond:#0E4D52; --pond-deep:#093B3F; --shore:#EDF4F2; --paper:#FFFFFF;
+  --ink:#16302F; --soft:#4A6362; --line:#C8D9D5; --buoy:#F2B01E; --buoy-soft:#FDF3D6;
+  --focus:#1B7F87;
+}
+*{box-sizing:border-box}
+html{font-size:100%;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color:var(--ink);background:var(--shore);line-height:1.55}
+h1,h2,h3,p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-999px;top:8px;background:#fff;padding:8px 12px;border-radius:6px;z-index:10}
+.skip:focus{left:8px}
+
+.app{display:grid;grid-template-columns:292px minmax(0,1fr);min-height:100vh}
+
+/* Rail */
+.rail{background:var(--pond);color:#fff;padding:28px 18px 20px;position:sticky;top:0;height:100vh;
+  overflow:auto;display:flex;flex-direction:column;gap:22px}
+.brand-form{font-weight:700;font-size:1.1875rem;line-height:1.3}
+.brand-co{font-size:.875rem;opacity:.82;margin-top:4px}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.steps a{display:grid;grid-template-columns:26px minmax(0,1fr) auto;align-items:center;gap:8px;
+  padding:10px 10px;border-radius:8px;color:#fff;text-decoration:none;font-size:.9688rem;
+  border-left:4px solid transparent}
+.steps a:hover{background:rgba(255,255,255,.08)}
+.steps a[aria-current="step"]{background:var(--pond-deep);border-left-color:var(--buoy);font-weight:600}
+.st-no{font-weight:700;font-variant-numeric:tabular-nums;opacity:.85}
+.st-prog{font-size:.8125rem;font-variant-numeric:tabular-nums;opacity:.8}
+.st-prog.full{color:var(--buoy);opacity:1;font-weight:600}
+.rail-foot{margin-top:auto;font-size:.8438rem;opacity:.9}
+
+/* Sheet */
+.sheet{max-width:800px;margin:0 auto;background:var(--paper);min-height:100vh;
+  border-left:1px solid var(--line);border-right:1px solid var(--line);padding-bottom:40px}
+.part-head{padding:40px 32px 26px;border-top:8px solid var(--pond)}
+.part-no{font-weight:600;color:var(--pond);font-size:1rem}
+.part-head h1{font-size:2.125rem;line-height:1.18;font-weight:700;letter-spacing:-.01em;margin-top:2px}
+.part-head h1:focus{outline:none}
+.part-meta{display:flex;flex-wrap:wrap;gap:8px 28px;margin:18px 0 0;padding:14px 16px;
+  background:var(--buoy-soft);border-radius:10px}
+.part-meta div{min-width:0}
+.part-meta dt{font-size:.8438rem;color:var(--soft)}
+.part-meta dd{margin:0;font-weight:600}
+.lead{font-size:1.0625rem;max-width:62ch;margin-top:14px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+
+.q,.need{display:grid;grid-template-columns:56px minmax(0,1fr);gap:0 12px;padding:22px 32px;
+  border-top:1px solid var(--line)}
+.q-code{font-weight:700;color:var(--pond);font-size:.9688rem;padding-top:2px;font-variant-numeric:tabular-nums}
+.q-text{font-weight:600;font-size:1.0625rem;line-height:1.45}
+.q-hint{color:var(--soft);font-size:.9375rem;margin-top:4px;max-width:66ch}
+.f{display:block;margin:14px 0 0;padding:0;border:0;min-width:0}
+.f-label{display:block;font-size:.9375rem;color:var(--soft);margin-bottom:6px;padding:0}
+.f-help{font-size:.875rem;color:var(--soft);margin-top:6px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{position:relative;display:inline-flex}
+.opt input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.opt span{display:inline-flex;align-items:center;gap:9px;min-height:44px;padding:8px 14px 8px 12px;
+  border:1.5px solid var(--line);border-radius:10px;background:#fff;line-height:1.3}
+.opt span::before{content:"";flex:none;width:18px;height:18px;border:1.5px solid var(--soft);
+  border-radius:4px;background:#fff}
+.opt input[type=radio]+span::before{border-radius:50%}
+.opt input:hover+span{border-color:var(--pond)}
+.opt input:checked+span{border-color:var(--pond);background:var(--buoy-soft);box-shadow:inset 0 0 0 1px var(--pond)}
+.opt input:checked+span::before{border-color:var(--pond);background:var(--pond)
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M4 9.5l3.2 3.2L14 5.8' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+.opt input:focus-visible+span{outline:3px solid var(--focus);outline-offset:2px}
+.opt input:disabled+span{opacity:.45}
+.opt input:disabled{cursor:not-allowed}
+.rank{display:inline-flex;align-items:center;gap:9px;min-height:44px;padding:8px 14px 8px 10px;
+  border:1.5px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;line-height:1.3}
+.rank b{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;
+  border:1.5px dashed var(--soft);font-size:.875rem;font-weight:700}
+.rank:hover{border-color:var(--pond)}
+.rank.on{border-color:var(--pond);background:var(--buoy-soft);box-shadow:inset 0 0 0 1px var(--pond)}
+.rank.on b{background:var(--pond);border:0;color:#fff}
+input[type=text],textarea,select{width:100%;min-height:44px;padding:10px 12px;border:1.5px solid var(--line);
+  border-radius:8px;background:#fff}
+textarea{min-height:132px;resize:vertical;line-height:1.5}
+input[type=text]:hover,textarea:hover,select:hover{border-color:var(--pond)}
+::placeholder{color:#7A9391}
+.clear{background:none;border:0;padding:6px 0;margin-top:4px;color:var(--pond);text-decoration:underline;
+  cursor:pointer;font-size:.875rem}
+
+.block{padding:26px 32px;border-top:1px solid var(--line)}
+.block h2,.block h3{font-size:1.25rem;line-height:1.3;font-weight:700}
+.block .q-hint{margin-top:6px}
+.limit{margin-top:12px;padding:10px 14px;border-radius:8px;background:var(--buoy-soft);font-weight:600;font-size:.9375rem}
+.limit.hit{box-shadow:inset 0 0 0 2px var(--buoy)}
+.grow{border:1.5px solid var(--line);border-radius:10px;padding:6px 16px 16px;margin:14px 0 0;min-width:0}
+.grow legend{font-weight:600;padding:0 6px}
+.gcols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 16px;margin-top:6px}
+.gcols label{display:block;min-width:0}
+
+.rules{margin:16px 0 0;padding-left:20px;max-width:66ch}
+.rules li{margin-top:8px}
+.pick{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.pick a{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;
+  padding:14px 16px;border:1.5px solid var(--line);border-radius:10px;text-decoration:none;color:inherit}
+.pick a:hover{border-color:var(--pond);background:var(--shore)}
+.pick-no{font-weight:700;font-size:1.375rem;color:var(--pond);font-variant-numeric:tabular-nums}
+.pick-name{font-weight:600}
+.pick-who{display:block;font-size:.9063rem;color:var(--soft);font-weight:400}
+.pick-prog{font-size:.875rem;color:var(--soft);font-variant-numeric:tabular-nums}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:10px 18px;
+  border-radius:10px;border:1.5px solid var(--pond);background:#fff;color:var(--pond);font-weight:600;
+  cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--shore)}
+.btn.primary{background:var(--pond);color:#fff}
+.btn.primary:hover{background:var(--pond-deep)}
+.btn.small{min-height:38px;padding:6px 12px;font-size:.9063rem;font-weight:600}
+.btn.danger{border-color:#9A3B1F;color:#9A3B1F}
+.pager{display:flex;justify-content:space-between;gap:12px;padding:26px 32px 0;border-top:1px solid var(--line)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.msg{margin-top:12px;padding:10px 14px;border-radius:8px;background:var(--shore);font-size:.9375rem}
+.status{width:100%;border-collapse:collapse;margin-top:14px}
+.status th,.status td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);font-weight:400}
+.status th{font-size:.875rem;color:var(--soft)}
+.status td:last-child,.status th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+
+#print-root{display:none}
+.rv h2{font-size:1.125rem;margin:22px 0 6px;padding-top:10px;border-top:2px solid var(--ink)}
+.rv dl{margin:0}
+.rv dt{font-weight:600;margin-top:10px}
+.rv dd{margin:2px 0 0 0;white-space:pre-wrap}
+.rv .none{color:var(--soft)}
+
+@media (max-width:880px){
+  .app{display:block}
+  .rail{position:sticky;top:0;z-index:5;height:auto;padding:12px 14px 10px;gap:8px;overflow:visible}
+  .brand-form{font-size:1rem}
+  .brand-co{display:none}
+  .steps{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px;scrollbar-width:thin}
+  .steps a{grid-template-columns:auto auto;white-space:nowrap;padding:7px 10px;border-left:0;
+    border-bottom:3px solid transparent;font-size:.9063rem}
+  .steps a[aria-current="step"]{border-bottom-color:var(--buoy)}
+  .st-no{display:none}
+  .rail-foot{margin-top:0;font-size:.7813rem}
+  .sheet{border:0}
+  .part-head{padding:26px 18px 20px}
+  .part-head h1{font-size:1.625rem}
+  .q,.need{grid-template-columns:1fr;padding:20px 18px}
+  .q-code{padding:0 0 2px}
+  .block,.pager{padding-left:18px;padding-right:18px}
+  .gcols{grid-template-columns:1fr}
+  .pick a{grid-template-columns:36px minmax(0,1fr)}
+  .pick-prog{grid-column:2}
+}
+@media (prefers-reduced-motion:no-preference){
+  .opt span,.rank,.btn,.steps a{transition:background-color .12s,border-color .12s}
+}
+@media print{
+  body{background:#fff}
+  .app,.skip{display:none !important}
+  #print-root{display:block;padding:0 4mm;font-size:11pt}
+  .rv h1{font-size:16pt;margin:0 0 4px}
+  .rv dt,.rv h2{break-after:avoid}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Bỏ qua mục lục</a>
+<div class="app">
+  <nav class="rail" aria-label="Các phần của phiếu">
+    <div class="brand">
+      <p class="brand-form">Phiếu khảo sát trợ lý AI</p>
+      <p class="brand-co">Công ty TNHH Hóa chất Thành Thịnh</p>
+    </div>
+    <ol class="steps" id="steps"></ol>
+    <div class="rail-foot"><p id="saved" role="status"></p></div>
+  </nav>
+  <main id="main" class="main"><div class="sheet" id="sheet"></div></main>
+</div>
+<div id="print-root"></div>
+
+<script src="config.js"></script>
+<script>
+(function () {
+'use strict';
+
+/* Địa chỉ nhận phiếu (POST JSON) đặt trong file config.js. Để trống thì trang chỉ cho tải file kết quả. */
+var CONFIG = window.SURVEY_CONFIG || {};
+var SUBMIT_URL = typeof CONFIG.submitUrl === 'string' ? CONFIG.submitUrl.trim() : '';
+
+var FORM_ID = 'thanh-thinh-khao-sat-tro-ly-ai';
+var STORE_KEY = 'tt-khao-sat-ai-v1';
+var SENT_KEY = 'tt-khao-sat-ai-sent';
+var ID_KEY = 'tt-khao-sat-ai-client';
+var LIMIT_NOW = 5;
+var NOW = 'Cần ngay', LATER = 'Làm sau', NONE = 'Chưa cần';
+var NEED_HINT = 'Danh sách này dùng để khảo sát, chưa phải phạm vi cam kết. Với mỗi việc, chọn mức cần và ghi công cụ đang dùng cùng số lần mỗi tuần, ví dụ: Excel, khoảng 20 lần mỗi tuần.';
+
+function one(k, label, opts) { return { t: 'one', k: k, label: label, opts: opts }; }
+function many(k, label, opts, max) { return { t: 'many', k: k, label: label, opts: opts, max: max || 0 }; }
+function rank(k, label, opts, max) { return { t: 'rank', k: k, label: label, opts: opts, max: max || 0 }; }
+function text(k, label, ph) { return { t: 'text', k: k, label: label || '', ph: ph || '' }; }
+function area(k, label, ph) { return { t: 'area', k: k, label: label || '', ph: ph || '' }; }
+function q(code, txt, fields, hint) { return { kind: 'q', code: code, text: txt, fields: fields, hint: hint || '' }; }
+
+var PARTS = [
+  { id: 'huong-dan', nav: 'Hướng dẫn', kind: 'intro' },
+
+  { id: 'chung', no: 1, nav: 'Thông tin chung', title: 'Thông tin chung và mong muốn',
+    who: 'Ban giám đốc hoặc người đầu mối', time: 'Khoảng 10 phút',
+    items: [
+      q('1.1', 'Mảng kinh doanh nào mang lại doanh thu nhiều nhất?', [
+        rank('1.1', 'Bấm lần lượt từ mảng lớn nhất đến nhỏ nhất', ['Thủy sản', 'Xử lý nước', 'Hóa chất công nghiệp', 'Mảng khác']),
+        text('1.1o', 'Nếu có mảng khác, ghi rõ')]),
+      q('1.2', 'Nhóm khách nào mang lại doanh thu nhiều nhất?', [
+        rank('1.2', 'Bấm lần lượt từ nhóm lớn nhất đến nhỏ nhất', ['Đại lý', 'Trại, công ty nuôi', 'Hộ nuôi lẻ', 'Doanh nghiệp công nghiệp', 'Nhóm khác']),
+        text('1.2o', 'Nếu có nhóm khác, ghi rõ')]),
+      q('1.3', 'Hàng bán ra do công ty tự làm hay lấy từ nơi khác? Kho thành phẩm đặt ở đâu?', [
+        many('1.3a', 'Nguồn hàng', ['Tự sản xuất', 'Thuê gia công', 'Nhập về bán']),
+        many('1.3b', 'Kho thành phẩm', ['Nhà máy', 'TP.HCM', 'Nơi khác']),
+        text('1.3o', 'Nếu kho ở nơi khác, ghi rõ')]),
+      q('1.4', 'Sau 3–6 tháng, công ty muốn thấy kết quả nào nhất?', [
+        many('1.4', 'Chọn tối đa hai', ['Trả lời khách nhanh hơn', 'Thêm đơn hàng', 'Bớt việc thủ công', 'Bớt sai sót', 'Báo cáo nhanh hơn', 'Kết quả khác'], 2),
+        text('1.4o', 'Nếu là kết quả khác, ghi rõ')]),
+      q('1.5', 'Công ty muốn bắt đầu ở quy mô nào?', [
+        one('1.5', 'Chọn một', ['Thử một việc ở bộ phận Sales', 'Làm trọn bộ phận Sales', 'Làm cả Sales, Kho và Kế toán', 'Chưa rõ, cần tư vấn'])],
+        'Câu này do ban giám đốc trả lời.'),
+      q('1.6', 'Công ty muốn bắt đầu dùng thử vào khoảng thời gian nào?', [text('1.6', '', 'Ví dụ: tháng 1 năm 2027')]),
+      q('1.7', 'Ai là người quyết định, và ai là đầu mối làm việc hằng tuần với đội triển khai?', [
+        text('1.7a', 'Người quyết định (họ tên, chức vụ)'),
+        text('1.7b', 'Đầu mối làm việc hằng tuần (họ tên, chức vụ)')])
+    ] },
+
+  { id: 'sales', no: 2, nav: 'Kinh doanh / Sales', title: 'Kinh doanh / Sales',
+    who: 'Trưởng phòng kinh doanh hoặc nhân viên sales online', time: 'Khoảng 25–30 phút',
+    items: [
+      q('2.1', 'Khách liên hệ qua kênh nào nhiều nhất?', [
+        rank('2.1', 'Bấm lần lượt ba kênh nhiều nhất, bắt đầu từ kênh số một', ['Điện thoại', 'Zalo', 'Messenger', 'Bình luận Facebook', 'Email', 'Mẫu liên hệ trên website', 'Gặp trực tiếp'], 3)]),
+      q('2.2', 'Mỗi ngày khoảng bao nhiêu khách nhắn tin và gọi điện? Tháng nào cao điểm? Khách thường nhắn bằng gì?', [
+        one('2.2a', 'Số khách nhắn tin mỗi ngày (chọn một)', ['Dưới 20', '20–49', '50–99', 'Từ 100']),
+        text('2.2b', 'Số cuộc gọi mỗi ngày (ước lượng)'),
+        text('2.2c', 'Tháng cao điểm'),
+        many('2.2d', 'Khách thường nhắn bằng', ['Chữ', 'Ghi âm', 'Hình ảnh'])]),
+      q('2.3', 'Khách nhắn vào đâu?', [
+        many('2.3a', 'Chọn mọi nơi khách đang nhắn', ['Zalo cá nhân của nhân viên', 'Nhóm Zalo với đại lý', 'Zalo mang tên công ty (Official Account)', 'Fanpage']),
+        text('2.3b', 'Nếu đã có Official Account hoặc Fanpage: bộ phận nào quản trị'),
+        text('2.3c', 'Khoảng bao nhiêu người theo dõi')]),
+      q('2.4', 'Ngoài giờ làm, tin nhắn của khách được xử lý thế nào?', [
+        one('2.4', 'Chọn một', ['Có người trực', 'Sáng hôm sau trả lời', 'Tùy từng nhân viên'])]),
+      q('2.5', 'Năm câu khách hỏi nhiều nhất là gì, và công ty thường trả lời thế nào?', [
+        area('2.5', '', 'Ví dụ: khách hỏi liều dùng cho ao 1.000 m³, sales tra nhãn rồi trả lời.')],
+        'Không ghi tên khách.'),
+      q('2.6', 'Hướng dẫn liều dùng có ở đâu? Bộ phận nào tư vấn kỹ thuật? Khách hỏi về tôm cá bệnh, sự cố ao ở mức nào?', [
+        many('2.6a', 'Hướng dẫn liều dùng có ở', ['Nhãn, bao bì', 'File', 'Bản giấy', 'Chủ yếu theo kinh nghiệm']),
+        text('2.6b', 'Bộ phận tư vấn kỹ thuật'),
+        one('2.6c', 'Khách hỏi về tôm cá bệnh, sự cố ao (chọn một)', ['Thường xuyên', 'Thỉnh thoảng', 'Hiếm'])]),
+      q('2.7', 'Giá bán áp dụng thế nào, và bảng giá lưu ở đâu?', [
+        one('2.7a', 'Giá bán (chọn một)', ['Một bảng giá chung', 'Nhiều mức theo nhóm khách hoặc sản lượng', 'Thỏa thuận từng đơn']),
+        many('2.7b', 'Bảng giá lưu ở', ['Excel', 'Phần mềm', 'Bản giấy'])]),
+      q('2.8', 'Báo giá được soạn bằng công cụ gì? Mỗi tuần khoảng bao nhiêu báo giá?', [
+        text('2.8a', 'Công cụ soạn báo giá'),
+        text('2.8b', 'Số báo giá mỗi tuần (ước lượng)')]),
+      q('2.9', 'Mỗi tháng khoảng bao nhiêu đơn hàng? Đơn được ghi vào đâu?', [
+        one('2.9a', 'Số đơn mỗi tháng (chọn một)', ['Dưới 50', '50–199', '200–499', 'Từ 500']),
+        many('2.9b', 'Đơn được ghi vào', ['Phần mềm', 'Excel dùng chung', 'Excel trên máy cá nhân', 'Sổ giấy', 'Chỉ lưu trong tin nhắn']),
+        text('2.9c', 'Tên phần mềm, nếu có')]),
+      q('2.10', 'Khách thanh toán theo cách nào?', [
+        many('2.10a', 'Chọn mọi cách đang áp dụng', ['Tất cả chuyển khoản trước', 'Có nhóm khách được trả sau', 'Thu tiền khi giao']),
+        text('2.10b', 'Nếu có trả sau, áp dụng cho nhóm khách nào')]),
+      q('2.11', 'Danh sách khách hàng lưu ở đâu? Có ghi lại khách đã mua gì, khi nào không?', [area('2.11', '')]),
+      q('2.12', 'Với tin nhắn của khách, công ty muốn trợ lý AI làm đến mức nào? Việc nào luôn phải do người trả lời?', [
+        one('2.12a', 'Mức tự động (chọn một)', ['Tự trả lời câu đơn giản, câu khó chuyển nhân viên', 'Chỉ soạn sẵn, nhân viên bấm gửi', 'Chưa rõ']),
+        many('2.12b', 'Luôn phải do người trả lời', ['Giá', 'Tôm cá bệnh', 'Khiếu nại', 'Công nợ', 'Việc khác']),
+        text('2.12c', 'Nếu có việc khác, ghi rõ'),
+        text('2.12d', 'Bộ phận nhận các ca chuyển cho người')]),
+      q('2.13', 'Trợ lý AI được báo giá tới mức nào?', [
+        one('2.13', 'Chọn một', ['Không báo giá', 'Chỉ báo cho khách, đại lý đã có trong danh sách', 'Báo giá lẻ cho mọi khách'])]),
+      { kind: 'needs', title: 'Việc có thể giao cho trợ lý AI ở bộ phận Sales', items: [
+        ['S1', 'Trả lời câu hỏi thường gặp của khách trên Zalo, Messenger, kể cả ngoài giờ'],
+        ['S2', 'Tư vấn chọn sản phẩm và liều dùng theo tài liệu của công ty'],
+        ['S3', 'Soạn báo giá từ yêu cầu của khách để nhân viên duyệt'],
+        ['S4', 'Ghi đơn hàng từ tin nhắn của khách vào file hoặc phần mềm'],
+        ['S5', 'Trả lời khách về tình trạng đơn hàng và giao hàng'],
+        ['S6', 'Nhắc khách mua lại và gửi khuyến mãi đúng lúc'],
+        ['S7', 'Giúp nhân viên sales tra nhanh sản phẩm, giá, chính sách'],
+        ['S8', 'Gửi quản lý báo cáo doanh số và danh sách khách lâu chưa mua'],
+        ['S9', 'Ghi lại thông tin khách mới và chuyển đúng bộ phận phụ trách'],
+        ['S10', 'Gửi khách tài liệu sản phẩm (hướng dẫn, phiếu kiểm nghiệm, giấy phép)']] }
+    ] },
+
+  { id: 'kho', no: 3, nav: 'Kho và giao hàng', title: 'Kho và giao hàng',
+    who: 'Thủ kho', time: 'Khoảng 10–15 phút',
+    items: [
+      q('3.1', 'Công ty có khoảng bao nhiêu mã hàng? Các bộ phận có dùng chung một danh mục mã hàng không?', [
+        text('3.1a', 'Số mã hàng, tính cả quy cách đóng gói (ước lượng)'),
+        one('3.1b', 'Danh mục mã hàng dùng chung (chọn một)', ['Có', 'Mỗi bộ phận một kiểu', 'Chưa rõ'])],
+        'Website đang liệt kê khoảng 86 sản phẩm thủy sản.'),
+      q('3.2', 'Tồn kho được theo dõi bằng gì, và cập nhật lúc nào?', [
+        many('3.2a', 'Theo dõi bằng', ['Phần mềm', 'Excel', 'Sổ giấy']),
+        text('3.2b', 'Tên phần mềm, nếu có'),
+        one('3.2c', 'Cập nhật (chọn một)', ['Ngay khi xuất nhập', 'Cuối ngày', 'Cuối tuần'])]),
+      q('3.3', 'Kho có ghi số lô và hạn sử dụng của từng mặt hàng không?', [
+        one('3.3', 'Chọn một', ['Có', 'Chỉ một số mặt hàng', 'Không'])]),
+      q('3.4', 'Khi khách hỏi, sales biết còn hàng bằng cách nào?', [
+        many('3.4', 'Chọn mọi cách đang dùng', ['Gọi hoặc nhắn hỏi kho', 'Tự xem file', 'Xem trên phần mềm'])]),
+      q('3.5', 'Hàng được giao bằng gì? Bộ phận nào báo phí vận chuyển cho khách?', [
+        many('3.5a', 'Giao bằng', ['Xe công ty', 'Chành xe', 'Đơn vị vận chuyển']),
+        text('3.5b', 'Bộ phận báo phí vận chuyển')]),
+      q('3.6', 'Sau khi gửi hàng, thông tin nào được ghi lại, và ghi ở đâu?', [
+        many('3.6a', 'Thông tin được ghi lại', ['Ngày gửi', 'Tên chành xe hoặc đơn vị vận chuyển', 'Số phiếu gửi', 'Không ghi']),
+        many('3.6b', 'Ghi ở', ['File', 'Phần mềm', 'Sổ giấy'])]),
+      q('3.7', 'Kho nhận lệnh xuất hàng bằng cách nào? Phiếu xuất kho lập bằng gì?', [
+        many('3.7a', 'Nhận lệnh xuất bằng', ['Lời nói', 'Tin nhắn', 'Phiếu', 'Phần mềm']),
+        text('3.7b', 'Phiếu xuất kho lập bằng gì')]),
+      { kind: 'needs', title: 'Việc có thể giao cho trợ lý AI ở bộ phận Kho', items: [
+        ['K1', 'Cho sales hỏi nhanh một mặt hàng còn bao nhiêu'],
+        ['K2', 'Cảnh báo hàng sắp hết và hàng cận hạn sử dụng'],
+        ['K3', 'Lập phiếu xuất kho từ đơn hàng']] }
+    ] },
+
+  { id: 'ke-toan', no: 4, nav: 'Kế toán', title: 'Kế toán',
+    who: 'Kế toán trưởng hoặc kế toán công nợ', time: 'Khoảng 10–15 phút',
+    items: [
+      q('4.1', 'Công ty dùng phần mềm kế toán và hóa đơn điện tử nào?', [
+        text('4.1a', 'Phần mềm kế toán'),
+        text('4.1b', 'Hóa đơn điện tử')]),
+      q('4.2', 'Mỗi tháng xuất khoảng bao nhiêu hóa đơn? Khi lập hóa đơn, thông tin đơn hàng được lấy thế nào?', [
+        text('4.2a', 'Số hóa đơn mỗi tháng (ước lượng)'),
+        one('4.2b', 'Thông tin đơn hàng (chọn một)', ['Nhập lại bằng tay', 'Lấy tự động từ đơn hàng'])]),
+      q('4.3', 'Công nợ của khách được theo dõi bằng gì? Bộ phận nào nhắc nợ, qua kênh nào?', [area('4.3', '')],
+        'Bỏ qua nếu tất cả khách trả trước.'),
+      q('4.4', 'Tiền khách chuyển vào mấy tài khoản? Nội dung chuyển khoản thường ghi gì? Mỗi ngày khoảng bao nhiêu khoản tiền về?', [
+        text('4.4a', 'Có mấy tài khoản nhận tiền, ở ngân hàng nào (không cần ghi số tài khoản)'),
+        many('4.4b', 'Nội dung chuyển khoản thường', ['Có mã đơn', 'Có tên khách', 'Ghi tùy ý']),
+        text('4.4c', 'Số khoản tiền về mỗi ngày (ước lượng)')]),
+      q('4.5', 'Báo cáo nào đang phải làm tay bằng Excel mỗi tuần, mỗi tháng?', [area('4.5', '')]),
+      { kind: 'needs', title: 'Việc có thể giao cho trợ lý AI ở bộ phận Kế toán', items: [
+        ['T1', 'Nhắc nợ và gửi đối chiếu công nợ cho khách'],
+        ['T2', 'Đối chiếu tiền chuyển khoản với đơn hàng'],
+        ['T3', 'Lập hóa đơn nháp từ đơn hàng'],
+        ['T4', 'Tổng hợp báo cáo tuần, tháng']] }
+    ] },
+
+  { id: 'phan-mem', no: 5, nav: 'Phần mềm và đào tạo', title: 'Phần mềm, dữ liệu và đào tạo',
+    who: 'Người đầu mối, cùng người phụ trách máy tính và phần mềm', time: 'Khoảng 10–15 phút',
+    items: [
+      { kind: 'grid', key: 'pm', title: 'Phần mềm và công cụ đang dùng',
+        hint: 'Việc nào chưa dùng phần mềm thì ghi cách đang làm (Excel, sổ giấy, Zalo). Ô nào không biết, ghi “chưa rõ”.',
+        rows: ['Bán hàng, quản lý khách hàng', 'Quản lý kho', 'Kế toán', 'Hóa đơn điện tử', 'Website', 'Lưu trữ tài liệu chung'],
+        cols: ['Phần mềm hoặc công cụ đang dùng', 'Bộ phận quản lý', 'Cài trên máy hay dùng qua web', 'File lưu ở máy cá nhân hay nơi dùng chung'] },
+      q('5.1', 'Công ty có người phụ trách máy tính, phần mềm không?', [
+        one('5.1', 'Chọn một', ['Nhân viên nội bộ', 'Thuê ngoài', 'Chưa có'])]),
+      q('5.2', 'Loại thông tin nào công ty không muốn đưa vào hệ thống AI, hoặc chỉ ban giám đốc và kế toán được xem?', [
+        many('5.2a', 'Chọn mọi loại cần giữ riêng', ['Giá vốn', 'Danh sách khách', 'Công nợ', 'Loại khác']),
+        text('5.2b', 'Nếu có loại khác, ghi rõ')]),
+      q('5.3', 'Công ty có chấp nhận nội dung trao đổi được xử lý bằng dịch vụ AI của hãng nước ngoài (loại như ChatGPT) không?', [
+        one('5.3', 'Chọn một', ['Chấp nhận', 'Chấp nhận, trừ dữ liệu ở câu 5.2', 'Chỉ xử lý trong nước', 'Cần tư vấn'])]),
+      { kind: 'grid', key: 'dt', code: '5.4', title: 'Nhu cầu đào tạo theo nhóm',
+        hint: 'Nhóm nào không tham gia thì để trống.',
+        rows: ['Ban giám đốc, quản lý', 'Kinh doanh / Sales', 'Kỹ thuật', 'Kho và giao hàng', 'Kế toán', 'Marketing', 'Sản xuất'],
+        cols: ['Số người sẽ dùng', 'Đã dùng công cụ AI chưa', 'Làm việc trên máy tính hay điện thoại', 'Khung giờ và địa điểm học thuận tiện'] }
+    ] },
+
+  { id: 'uu-tien', no: 6, nav: 'Ưu tiên chung', title: 'Ưu tiên chung',
+    who: 'Người đầu mối hoặc ban giám đốc, sau khi các phần khác đã điền', time: 'Khoảng 5 phút',
+    items: [
+      { kind: 'nowlist' },
+      { kind: 'top3', code: '6.1', text: 'Ba việc nào cần làm trước nhất, theo thứ tự?' },
+      q('6.2', 'Có việc nào khác công ty muốn giao cho trợ lý AI?', [area('6.2', '', 'Ví dụ: việc ở bộ phận sản xuất, mua hàng.')])
+    ] },
+
+  { id: 'gui', nav: 'Gửi phiếu', kind: 'finish' }
+];
+
+var NEEDS = [];
+PARTS.forEach(function (p) { (p.items || []).forEach(function (it) { if (it.kind === 'needs') it.items.forEach(function (n) { NEEDS.push(n); }); }); });
+var FIELDS = {};
+PARTS.forEach(function (p) { (p.items || []).forEach(function (it) { if (it.kind === 'q') it.fields.forEach(function (f) { FIELDS[f.k] = { f: f, q: it }; }); }); });
+
+var state = {};
+var storageOk = true;
+function load() {
+  try { var raw = window.localStorage.getItem(STORE_KEY); state = raw ? JSON.parse(raw) : {}; if (!state || typeof state !== 'object') state = {}; }
+  catch (e) { state = {}; storageOk = false; }
+}
+var saveTimer = null;
+function save() {
+  if (saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(function () {
+    try { window.localStorage.setItem(STORE_KEY, JSON.stringify(state)); storageOk = true; }
+    catch (e) { storageOk = false; }
+    showSaved();
+  }, 250);
+}
+function pad(n) { return (n < 10 ? '0' : '') + n; }
+function showSaved() {
+  var el = document.getElementById('saved'); if (!el) return;
+  if (!storageOk) { el.textContent = 'Thiết bị này không cho lưu tạm. Hãy tải file kết quả trước khi đóng trang.'; return; }
+  var d = new Date(), sent = sentAt();
+  el.textContent = 'Đã lưu trên thiết bị này lúc ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + '. ' +
+    (sent ? 'Lần gửi gần nhất: ' + clock(sent) + '.' : 'Chưa gửi đi đâu.');
+}
+function sentAt() {
+  try { var s = window.localStorage.getItem(SENT_KEY); var d = s ? new Date(s) : null; return d && !isNaN(d.getTime()) ? d : null; }
+  catch (e) { return null; }
+}
+function clock(d) { return pad(d.getHours()) + ':' + pad(d.getMinutes()) + ' ngày ' + pad(d.getDate()) + '/' + pad(d.getMonth() + 1); }
+function clientId() {
+  try {
+    var id = window.localStorage.getItem(ID_KEY);
+    if (!id) {
+      id = (window.crypto && window.crypto.randomUUID) ? window.crypto.randomUUID() : String(Date.now()) + '-' + Math.random().toString(16).slice(2);
+      window.localStorage.setItem(ID_KEY, id);
+    }
+    return id;
+  } catch (e) { return ''; }
+}
+
+function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function filled(k) { var v = state[k]; return Array.isArray(v) ? v.length > 0 : (typeof v === 'string' && v.trim() !== ''); }
+function setVal(k, v) { if (v == null || v === '' || (Array.isArray(v) && !v.length)) delete state[k]; else state[k] = v; save(); }
+function countNow() { return NEEDS.filter(function (n) { return state['need.' + n[0] + '.level'] === NOW; }).length; }
+
+/* ---------- Rendering ---------- */
+function optHTML(type, k, o, i, checked, disabled) {
+  return '<label class="opt"><input type="' + type + '" name="' + esc(k) + '" data-k="' + esc(k) + '" value="' + esc(o) + '"' +
+    (checked ? ' checked' : '') + (disabled ? ' disabled' : '') + '><span>' + esc(o) + '</span></label>';
+}
+function fieldHTML(f, qtext) {
+  var v = state[f.k], k = f.k, lab = f.label || qtext || '';
+  var labCls = f.label ? 'f-label' : 'vh';
+  if (f.t === 'text') return '<label class="f" data-field="' + esc(k) + '"><span class="' + labCls + '">' + esc(lab) + '</span><input type="text" data-k="' + esc(k) + '" value="' + esc(v || '') + '" placeholder="' + esc(f.ph) + '" autocomplete="off"></label>';
+  if (f.t === 'area') return '<label class="f" data-field="' + esc(k) + '"><span class="' + labCls + '">' + esc(lab) + '</span><textarea data-k="' + esc(k) + '" placeholder="' + esc(f.ph) + '">' + esc(v || '') + '</textarea></label>';
+  if (f.t === 'one') {
+    return '<fieldset class="f" data-field="' + esc(k) + '"><legend class="' + labCls + '">' + esc(lab) + '</legend><div class="opts">' +
+      f.opts.map(function (o, i) { return optHTML('radio', k, o, i, v === o, false); }).join('') + '</div>' +
+      (v ? '<button type="button" class="clear" data-clear="' + esc(k) + '">Bỏ chọn</button>' : '') + '</fieldset>';
+  }
+  if (f.t === 'many') {
+    var arr = Array.isArray(v) ? v : [];
+    return '<fieldset class="f" data-field="' + esc(k) + '"><legend class="' + labCls + '">' + esc(lab) + '</legend><div class="opts">' +
+      f.opts.map(function (o, i) { return optHTML('checkbox', k, o, i, arr.indexOf(o) > -1, f.max && arr.length >= f.max && arr.indexOf(o) < 0); }).join('') + '</div></fieldset>';
+  }
+  if (f.t === 'rank') {
+    var r = Array.isArray(v) ? v : [];
+    return '<div class="f" data-field="' + esc(k) + '" role="group" aria-label="' + esc(lab) + '"><p class="f-label">' + esc(lab) + '</p><div class="opts">' +
+      f.opts.map(function (o) {
+        var i = r.indexOf(o);
+        return '<button type="button" class="rank' + (i > -1 ? ' on' : '') + '" data-rank="' + esc(k) + '" data-v="' + esc(o) + '" aria-pressed="' + (i > -1) + '"><b>' + (i > -1 ? i + 1 : '') + '</b>' + esc(o) + (i > -1 ? '<span class="vh">, thứ ' + (i + 1) + '</span>' : '') + '</button>';
+      }).join('') + '</div><p class="f-help">Bấm lại vào một mục để bỏ chọn mục đó.</p></div>';
+  }
+  return '';
+}
+function qHTML(it) {
+  return '<section class="q"><div class="q-code">' + esc(it.code) + '</div><div><h2 class="q-text">' + esc(it.text) + '</h2>' +
+    (it.hint ? '<p class="q-hint">' + esc(it.hint) + '</p>' : '') +
+    it.fields.map(function (f) { return fieldHTML(f, it.text); }).join('') + '</div></section>';
+}
+function limitHTML() {
+  var n = countNow();
+  return '<p class="limit' + (n >= LIMIT_NOW ? ' hit' : '') + '" data-limit>Đã chọn ' + n + '/' + LIMIT_NOW + ' việc “' + NOW + '” trong cả ba bộ phận.' +
+    (n >= LIMIT_NOW ? ' Muốn chọn thêm, hãy đổi một việc khác sang “' + LATER + '”.' : '') + '</p>';
+}
+function needHTML(n) {
+  var code = n[0], lk = 'need.' + code + '.level', tk = 'need.' + code + '.tool', lv = state[lk], full = countNow() >= LIMIT_NOW;
+  return '<section class="need" data-need="' + code + '"><div class="q-code">' + code + '</div><div><h3 class="q-text">' + esc(n[1]) + '</h3>' +
+    '<fieldset class="f"><legend class="vh">Mức cần cho việc ' + code + '</legend><div class="opts">' +
+    [NOW, LATER, NONE].map(function (o, i) { return optHTML('radio', lk, o, i, lv === o, o === NOW && full && lv !== NOW); }).join('') + '</div>' +
+    (lv ? '<button type="button" class="clear" data-clear="' + lk + '">Bỏ chọn</button>' : '') + '</fieldset>' +
+    '<label class="f"><span class="f-label">Hiện làm bằng công cụ gì, khoảng mấy lần mỗi tuần</span><input type="text" data-k="' + tk + '" value="' + esc(state[tk] || '') + '" autocomplete="off"></label></div></section>';
+}
+function needsHTML(it) {
+  return '<div class="block"><h2>' + esc(it.title) + '</h2><p class="q-hint">' + esc(NEED_HINT) + '</p>' + limitHTML() + '</div>' +
+    it.items.map(needHTML).join('');
+}
+function gridHTML(it) {
+  return '<div class="block">' + '<h2>' + (it.code ? esc(it.code) + ' ' : '') + esc(it.title) + '</h2><p class="q-hint">' + esc(it.hint) + '</p>' +
+    it.rows.map(function (r, i) {
+      return '<fieldset class="grow"><legend>' + esc(r) + '</legend><div class="gcols">' +
+        it.cols.map(function (c, j) { var k = 'grid.' + it.key + '.' + i + '.' + j; return '<label><span class="f-label">' + esc(c) + '</span><input type="text" data-k="' + k + '" value="' + esc(state[k] || '') + '" autocomplete="off"></label>'; }).join('') +
+        '</div></fieldset>';
+    }).join('') + '</div>';
+}
+function nowListHTML() {
+  var chosen = NEEDS.filter(function (n) { return state['need.' + n[0] + '.level'] === NOW; });
+  return '<div class="block" data-nowlist><h2>Các việc đang được chọn “' + NOW + '”</h2>' +
+    '<p class="q-hint">Mức cần được chọn ở cuối Phần 2, 3 và 4. Cả công ty chỉ chọn “' + NOW + '” cho tối đa ' + LIMIT_NOW + ' việc.</p>' + limitHTML() +
+    (chosen.length ? '<ul class="rules">' + chosen.map(function (n) { return '<li><b>' + n[0] + '</b> ' + esc(n[1]) + '</li>'; }).join('') + '</ul>'
+      : '<p class="msg">Chưa có việc nào được chọn “' + NOW + '”. Nếu các bộ phận gửi file riêng, hãy nhập các file đó ở bước Gửi phiếu trước.</p>') + '</div>';
+}
+function top3HTML(it) {
+  var sel = function (i) {
+    var k = 'top.' + i, v = state[k] || '';
+    return '<label class="f"><span class="f-label">Ưu tiên ' + i + '</span><select data-k="' + k + '"><option value="">Chưa chọn</option>' +
+      NEEDS.map(function (n) { return '<option value="' + n[0] + '"' + (v === n[0] ? ' selected' : '') + '>' + n[0] + ': ' + esc(n[1]) + '</option>'; }).join('') + '</select></label>';
+  };
+  return '<section class="q"><div class="q-code">' + it.code + '</div><div><h2 class="q-text">' + esc(it.text) + '</h2>' + sel(1) + sel(2) + sel(3) + '</div></section>';
+}
+
+function progress(p) {
+  var done = 0, total = 0;
+  (p.items || []).forEach(function (it) {
+    if (it.kind === 'q') { total++; if (it.fields.some(function (f) { return filled(f.k); })) done++; }
+    else if (it.kind === 'needs') { it.items.forEach(function (n) { total++; if (filled('need.' + n[0] + '.level')) done++; }); }
+    else if (it.kind === 'grid') { total++; if (Object.keys(state).some(function (k) { return k.indexOf('grid.' + it.key + '.') === 0 && filled(k); })) done++; }
+    else if (it.kind === 'top3') { total++; if (filled('top.1')) done++; }
+  });
+  return { done: done, total: total };
+}
+function renderSteps(cur) {
+  document.getElementById('steps').innerHTML = PARTS.map(function (p) {
+    var pr = progress(p);
+    return '<li><a href="#' + p.id + '"' + (p.id === cur ? ' aria-current="step"' : '') + '><span class="st-no">' + (p.no || '') + '</span><span class="st-name">' + esc(p.nav) + '</span>' +
+      (pr.total ? '<span class="st-prog' + (pr.done === pr.total ? ' full' : '') + '">' + pr.done + '/' + pr.total + '</span>' : '<span></span>') + '</a></li>';
+  }).join('');
+}
+function pagerHTML(p) {
+  var i = PARTS.indexOf(p), prev = PARTS[i - 1], next = PARTS[i + 1];
+  return '<nav class="pager" aria-label="Chuyển phần">' +
+    (prev ? '<a class="btn" href="#' + prev.id + '">Quay lại: ' + esc(prev.nav) + '</a>' : '<span></span>') +
+    (next ? '<a class="btn primary" href="#' + next.id + '">Tiếp theo: ' + esc(next.nav) + '</a>' : '') + '</nav>';
+}
+function introHTML() {
+  var parts = PARTS.filter(function (p) { return p.no; });
+  return '<header class="part-head"><p class="part-no">Công ty TNHH Hóa chất Thành Thịnh</p><h1 tabindex="-1">Phiếu khảo sát nhu cầu ứng dụng trợ lý AI</h1>' +
+    '<p class="lead">Phiếu này giúp chúng tôi hiểu cách công ty đang làm việc, để đề xuất trợ lý AI phù hợp và báo giá sát thực tế. Trợ lý AI là phần mềm hỗ trợ nhân viên trả lời, soạn thảo và nhắc việc, do người của công ty kiểm soát.</p></header>' +
+    '<div class="block"><h2>Bạn điền phần nào?</h2><p class="q-hint">Mỗi phần do người nắm việc đó điền. Có thể gửi thẳng đường dẫn của từng phần cho đúng người.</p><ul class="pick">' +
+    parts.map(function (p) { var pr = progress(p); return '<li><a href="#' + p.id + '"><span class="pick-no">' + p.no + '</span><span class="pick-name">' + esc(p.title) + '<span class="pick-who">' + esc(p.who) + '. ' + esc(p.time) + '.</span></span><span class="pick-prog">' + pr.done + '/' + pr.total + ' mục</span></a></li>'; }).join('') +
+    '</ul></div>' +
+    '<div class="block"><h2>Cách điền</h2><ul class="rules">' +
+    '<li>Không cần số chính xác, ước lượng là đủ. Câu nào chưa rõ, ghi “chưa rõ”.</li>' +
+    '<li>Phiếu hỏi về cách làm việc và công cụ đang dùng, không hỏi về cá nhân. Chỉ ghi chức danh hoặc bộ phận, không ghi tên nhân viên.</li>' +
+    (SUBMIT_URL
+      ? '<li>Câu trả lời được lưu trên thiết bị này trong lúc điền. Điền xong, bấm Gửi phiếu ở bước cuối để gửi cho nhóm lập đề xuất.</li>'
+      : '<li>Câu trả lời được lưu ngay trên thiết bị này và chưa gửi đi đâu. Điền xong, tải file kết quả ở bước Gửi phiếu rồi gửi cho người tổng hợp.</li>') +
+    '<li>Chỉ nhóm lập đề xuất xem phiếu và tài liệu gửi kèm. Thông tin không chuyển cho bên khác và được xóa khi công ty yêu cầu.</li></ul></div>' +
+    '<div class="block"><h2>Người tổng hợp phiếu</h2><p class="q-hint">Chỉ người đầu mối điền mục này.</p>' +
+    fieldHTML(text('meta.name', 'Họ tên')) + fieldHTML(text('meta.title', 'Chức vụ')) + fieldHTML(text('meta.contact', 'Điện thoại hoặc email')) + '</div>' +
+    pagerHTML(PARTS[0]);
+}
+function partHTML(p) {
+  return '<header class="part-head"><p class="part-no">Phần ' + p.no + '</p><h1 tabindex="-1">' + esc(p.title) + '</h1>' +
+    '<dl class="part-meta"><div><dt>Người điền</dt><dd>' + esc(p.who) + '</dd></div><div><dt>Thời gian</dt><dd>' + esc(p.time) + '</dd></div></dl>' +
+    '<div class="tools"><button type="button" class="btn small" data-copy="' + p.id + '">Sao chép đường dẫn phần này</button></div>' +
+    fieldHTML(text('role.' + p.id, 'Chức danh hoặc bộ phận của người điền phần này (không ghi tên)')) + '</header>' +
+    p.items.map(function (it) {
+      if (it.kind === 'q') return qHTML(it);
+      if (it.kind === 'needs') return needsHTML(it);
+      if (it.kind === 'grid') return gridHTML(it);
+      if (it.kind === 'nowlist') return nowListHTML();
+      if (it.kind === 'top3') return top3HTML(it);
+      return '';
+    }).join('') + pagerHTML(p);
+}
+var ATTACH = ['Danh mục sản phẩm kèm hướng dẫn sử dụng', 'Chính sách bán hàng, giao hàng, đổi trả', 'Mẫu báo giá và mẫu đơn hàng để trống, chưa có thông tin khách'];
+function finishHTML() {
+  var canShare = false;
+  try { canShare = !!(navigator.canShare && navigator.canShare({ files: [new File(['{}'], 'a.json', { type: 'application/json' })] })); } catch (e) { canShare = false; }
+  var att = Array.isArray(state.attach) ? state.attach : [];
+  return '<header class="part-head"><p class="part-no">Bước cuối</p><h1 tabindex="-1">Gửi phiếu</h1>' +
+    '<p class="lead">' + (SUBMIT_URL
+      ? 'Câu trả lời đang nằm trên thiết bị này. Bấm Gửi phiếu để gửi cho nhóm lập đề xuất.'
+      : 'Câu trả lời đang nằm trên thiết bị này. Tải file kết quả rồi gửi qua Zalo hoặc email cho người tổng hợp phiếu.') + '</p></header>' +
+    '<div class="block"><h2>Tình trạng từng phần</h2><table class="status"><thead><tr><th scope="col">Phần</th><th scope="col">Đã trả lời</th></tr></thead><tbody>' +
+    PARTS.filter(function (p) { return p.no; }).map(function (p) { var pr = progress(p); return '<tr><td><a href="#' + p.id + '">Phần ' + p.no + '. ' + esc(p.title) + '</a></td><td>' + pr.done + '/' + pr.total + '</td></tr>'; }).join('') +
+    '</tbody></table></div>' +
+    (SUBMIT_URL
+      ? '<div class="block"><h2>Gửi phiếu</h2><p class="q-hint">Bấm Gửi phiếu để gửi mọi câu trả lời trên thiết bị này cho nhóm lập đề xuất. Nếu bạn chỉ điền một phần, cứ gửi; các phần được gộp lại sau. Sửa câu trả lời xong có thể gửi lại.</p>' +
+        '<div class="actions"><button type="button" class="btn primary" data-act="submit">Gửi phiếu</button>' +
+        '<button type="button" class="btn" data-act="download">Tải file kết quả</button>'
+      : '<div class="block"><h2>Tải file kết quả</h2><p class="q-hint">File chứa mọi câu trả lời đã điền trên thiết bị này. Nếu bạn chỉ điền một phần, cứ tải và gửi; người tổng hợp sẽ gộp các file lại.</p>' +
+        '<div class="actions"><button type="button" class="btn primary" data-act="download">Tải file kết quả</button>' +
+        (canShare ? '<button type="button" class="btn" data-act="share">Chia sẻ file qua Zalo, email</button>' : '')) +
+    '<button type="button" class="btn" data-act="print">In hoặc lưu PDF</button>' +
+    '</div><p class="msg" id="msg-out" role="status" hidden></p></div>' +
+    '<div class="block"><h2>Dành cho người tổng hợp</h2><p class="q-hint">Nhập file của từng bộ phận để gộp vào thiết bị này, điền Phần 6, rồi tải file kết quả cuối cùng. Câu nào trên thiết bị này đã có trả lời thì được giữ nguyên.</p>' +
+    '<div class="actions"><label class="btn" for="imp">Nhập file của bộ phận khác</label><input class="vh" type="file" id="imp" accept="application/json,.json" multiple></div>' +
+    '<p class="msg" id="msg-in" role="status" hidden></p></div>' +
+    '<div class="block"><h2>Tài liệu gửi kèm nếu có</h2><p class="q-hint">Gửi kèm được tài liệu nào thì đề xuất sát thực tế hơn tới đó. Bảng giá và các cuộc trò chuyện với khách sẽ xem trực tiếp tại buổi gặp, không cần gửi.</p>' +
+    '<fieldset class="f" data-field="attach"><legend class="vh">Tài liệu sẽ gửi kèm</legend><div class="opts">' +
+    ATTACH.map(function (o, i) { return optHTML('checkbox', 'attach', o, i, att.indexOf(o) > -1, false); }).join('') + '</div></fieldset></div>' +
+    '<div class="block"><h2>Xóa câu trả lời trên thiết bị này</h2><p class="q-hint">Dùng khi bạn điền trên máy dùng chung. Việc này không xóa file đã tải về.</p>' +
+    '<div class="actions" id="reset-box"><button type="button" class="btn danger" data-act="reset-ask">Xóa câu trả lời</button></div></div>' +
+    pagerHTML(PARTS[PARTS.length - 1]);
+}
+
+var current = null;
+function partById(id) { for (var i = 0; i < PARTS.length; i++) if (PARTS[i].id === id) return PARTS[i]; return PARTS[0]; }
+function render(focus) {
+  var id = (window.location.hash || '').replace('#', '');
+  var p = partById(id); current = p;
+  document.getElementById('sheet').innerHTML = p.kind === 'intro' ? introHTML() : p.kind === 'finish' ? finishHTML() : partHTML(p);
+  renderSteps(p.id);
+  if (focus) {
+    window.scrollTo(0, 0);
+    var h = document.querySelector('.sheet h1'); if (h) h.focus({ preventScroll: true });
+    var cur = document.querySelector('.steps a[aria-current]'); if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: 'nearest', inline: 'center' });
+  }
+}
+function swap(sel, html) { var el = document.querySelector(sel); if (el) el.outerHTML = html; }
+function refreshNeeds() {
+  if (!current || !current.items) return;
+  current.items.forEach(function (it) { if (it.kind === 'needs') it.items.forEach(function (n) { swap('[data-need="' + n[0] + '"]', needHTML(n)); }); });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-limit]'), function (el) { el.outerHTML = limitHTML(); });
+}
+function refocus(k, v) {
+  var sel = v == null ? '[data-k="' + k + '"]' : '[data-k="' + k + '"][value="' + v.replace(/"/g, '\\"') + '"]';
+  var el = document.querySelector(sel); if (el) el.focus({ preventScroll: true });
+}
+
+/* ---------- Events ---------- */
+var sheet = document.getElementById('sheet');
+sheet.addEventListener('input', function (e) {
+  var t = e.target, k = t.getAttribute('data-k'); if (!k) return;
+  if (t.type === 'text' || t.tagName === 'TEXTAREA') { setVal(k, t.value); renderSteps(current.id); }
+});
+sheet.addEventListener('change', function (e) {
+  var t = e.target, k = t.getAttribute && t.getAttribute('data-k');
+  if (t.id === 'imp') { importFiles(t.files); t.value = ''; return; }
+  if (!k) return;
+  if (t.tagName === 'SELECT') { setVal(k, t.value); renderSteps(current.id); return; }
+  if (t.type === 'radio') {
+    setVal(k, t.value);
+    if (k.indexOf('need.') === 0) { refreshNeeds(); }
+    else if (FIELDS[k]) { swap('[data-field="' + k + '"]', fieldHTML(FIELDS[k].f, FIELDS[k].q.text)); }
+    refocus(k, t.value); renderSteps(current.id); return;
+  }
+  if (t.type === 'checkbox') {
+    var arr = Array.isArray(state[k]) ? state[k].slice() : [], i = arr.indexOf(t.value);
+    if (t.checked && i < 0) arr.push(t.value); if (!t.checked && i > -1) arr.splice(i, 1);
+    setVal(k, arr);
+    if (FIELDS[k] && FIELDS[k].f.max) { swap('[data-field="' + k + '"]', fieldHTML(FIELDS[k].f, FIELDS[k].q.text)); refocus(k, t.value); }
+    renderSteps(current.id);
+  }
+});
+sheet.addEventListener('click', function (e) {
+  var t = e.target.closest ? e.target.closest('button') : null; if (!t) return;
+  var rk = t.getAttribute('data-rank');
+  if (rk) {
+    var f = FIELDS[rk].f, v = t.getAttribute('data-v'), arr = Array.isArray(state[rk]) ? state[rk].slice() : [], i = arr.indexOf(v);
+    if (i > -1) arr.splice(i, 1); else if (!f.max || arr.length < f.max) arr.push(v);
+    setVal(rk, arr); swap('[data-field="' + rk + '"]', fieldHTML(f, FIELDS[rk].q.text));
+    var b = document.querySelector('[data-rank="' + rk + '"][data-v="' + v.replace(/"/g, '\\"') + '"]'); if (b) b.focus({ preventScroll: true });
+    renderSteps(current.id); return;
+  }
+  var ck = t.getAttribute('data-clear');
+  if (ck) {
+    setVal(ck, '');
+    if (ck.indexOf('need.') === 0) refreshNeeds(); else if (FIELDS[ck]) swap('[data-field="' + ck + '"]', fieldHTML(FIELDS[ck].f, FIELDS[ck].q.text));
+    refocus(ck); renderSteps(current.id); return;
+  }
+  var cp = t.getAttribute('data-copy');
+  if (cp) { copyLink(cp, t); return; }
+  var act = t.getAttribute('data-act');
+  if (act === 'download') { download(); }
+  else if (act === 'share') { share(); }
+  else if (act === 'print') { printAll(); }
+  else if (act === 'submit') { submit(t); }
+  else if (act === 'reset-ask') { document.getElementById('reset-box').innerHTML = '<button type="button" class="btn danger" data-act="reset-yes">Xóa hết câu trả lời trên thiết bị này</button><button type="button" class="btn" data-act="reset-no">Giữ lại</button>'; }
+  else if (act === 'reset-no') { render(false); }
+  else if (act === 'reset-yes') { state = {}; try { window.localStorage.removeItem(STORE_KEY); window.localStorage.removeItem(SENT_KEY); } catch (err) {} render(true); say('msg-out', 'Đã xóa câu trả lời trên thiết bị này.'); }
+});
+function say(id, msg) { var el = document.getElementById(id); if (el) { el.hidden = false; el.textContent = msg; } }
+function copyLink(id, btn) {
+  var url = window.location.href.split('#')[0] + '#' + id;
+  var done = function () { btn.textContent = 'Đã sao chép đường dẫn'; setTimeout(function () { btn.textContent = 'Sao chép đường dẫn phần này'; }, 2200); };
+  var fallback = function () {
+    var i = document.createElement('input'); i.value = url; document.body.appendChild(i); i.select();
+    try { document.execCommand('copy'); done(); } catch (e) { btn.textContent = url; }
+    document.body.removeChild(i);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, fallback); else fallback();
+}
+
+/* ---------- Export, import, print ---------- */
+function answerText(f) {
+  var v = state[f.k]; if (!filled(f.k)) return '';
+  if (f.t === 'rank') return v.map(function (o, i) { return (i + 1) + '. ' + o; }).join('; ');
+  if (Array.isArray(v)) return v.join(', ');
+  return String(v).trim();
+}
+function readable() {
+  var out = [];
+  var meta = [['Người tổng hợp', 'meta.name'], ['Chức vụ', 'meta.title'], ['Điện thoại hoặc email', 'meta.contact']];
+  meta.forEach(function (m) { if (filled(m[1])) out.push({ part: 'Người tổng hợp phiếu', code: '', question: m[0], answer: state[m[1]] }); });
+  PARTS.forEach(function (p) {
+    if (!p.items) return;
+    var pn = 'Phần ' + p.no + '. ' + p.title;
+    if (filled('role.' + p.id)) out.push({ part: pn, code: '', question: 'Chức danh hoặc bộ phận của người điền', answer: state['role.' + p.id] });
+    p.items.forEach(function (it) {
+      if (it.kind === 'q') {
+        var a = it.fields.map(function (f) { var t = answerText(f); return t ? (f.label && it.fields.length > 1 ? f.label + ': ' : '') + t : ''; }).filter(Boolean).join('\n');
+        out.push({ part: pn, code: it.code, question: it.text, answer: a });
+      } else if (it.kind === 'needs') {
+        it.items.forEach(function (n) {
+          var lv = state['need.' + n[0] + '.level'] || '', tool = state['need.' + n[0] + '.tool'] || '';
+          out.push({ part: pn, code: n[0], question: n[1], answer: [lv, tool ? 'Hiện làm: ' + tool : ''].filter(Boolean).join('\n') });
+        });
+      } else if (it.kind === 'grid') {
+        var lines = [];
+        it.rows.forEach(function (r, i) {
+          var cells = it.cols.map(function (c, j) { var v = state['grid.' + it.key + '.' + i + '.' + j]; return v ? c + ': ' + v : ''; }).filter(Boolean);
+          if (cells.length) lines.push(r + '\n  ' + cells.join('\n  '));
+        });
+        out.push({ part: pn, code: it.code || '', question: it.title, answer: lines.join('\n') });
+      } else if (it.kind === 'top3') {
+        var tops = [1, 2, 3].map(function (i) { return state['top.' + i] ? i + '. ' + state['top.' + i] : ''; }).filter(Boolean).join('; ');
+        out.push({ part: pn, code: it.code, question: it.text, answer: tops });
+      }
+    });
+  });
+  if (Array.isArray(state.attach) && state.attach.length) out.push({ part: 'Tài liệu gửi kèm', code: '', question: 'Tài liệu sẽ gửi kèm', answer: state.attach.join('\n') });
+  return out;
+}
+function payload() {
+  return { form: FORM_ID, version: 1, clientId: clientId(), exportedAt: new Date().toISOString(), answers: state, readable: readable() };
+}
+function fileName() {
+  var d = new Date();
+  return 'phieu-khao-sat-thanh-thinh-' + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + '-' + pad(d.getHours()) + pad(d.getMinutes()) + '.json';
+}
+function makeFile() { return new File([JSON.stringify(payload(), null, 2)], fileName(), { type: 'application/json' }); }
+function download() {
+  var blob = new Blob([JSON.stringify(payload(), null, 2)], { type: 'application/json' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = fileName();
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
+  say('msg-out', 'Đã tải file ' + a.download + '. Gửi file này qua Zalo hoặc email cho người tổng hợp phiếu.');
+}
+function share() {
+  try {
+    navigator.share({ files: [makeFile()], title: 'Phiếu khảo sát trợ lý AI' }).then(function () { say('msg-out', 'Đã mở phần chia sẻ.'); }, function () {});
+  } catch (e) { download(); }
+}
+function submit(btn) {
+  if (btn) btn.disabled = true;
+  say('msg-out', 'Đang gửi phiếu.');
+  var release = function () { if (btn) btn.disabled = false; };
+  fetch(SUBMIT_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload()) })
+    .then(function (r) {
+      if (!r.ok) throw new Error(String(r.status));
+      var now = new Date();
+      try { window.localStorage.setItem(SENT_KEY, now.toISOString()); } catch (e) {}
+      say('msg-out', 'Đã gửi phiếu lúc ' + clock(now) + '. Nếu sửa câu trả lời, bấm Gửi phiếu lần nữa.');
+      showSaved(); release();
+    })
+    .catch(function () {
+      say('msg-out', 'Chưa gửi được phiếu. Kiểm tra kết nối mạng rồi gửi lại, hoặc tải file kết quả và gửi qua Zalo, email.');
+      release();
+    });
+}
+function importFiles(files) {
+  var list = Array.prototype.slice.call(files || []); if (!list.length) return;
+  var added = 0, kept = 0, bad = 0, left = list.length;
+  list.forEach(function (file) {
+    var rd = new FileReader();
+    rd.onload = function () {
+      try {
+        var data = JSON.parse(String(rd.result));
+        if (!data || data.form !== FORM_ID || typeof data.answers !== 'object') throw new Error('form');
+        Object.keys(data.answers).forEach(function (k) {
+          var v = data.answers[k];
+          var ok = typeof v === 'string' || (Array.isArray(v) && v.every(function (x) { return typeof x === 'string'; }));
+          if (!ok) return;
+          if (k === 'attach' && Array.isArray(v)) { var cur = Array.isArray(state.attach) ? state.attach : []; v.forEach(function (x) { if (cur.indexOf(x) < 0) cur.push(x); }); state.attach = cur; return; }
+          if (filled(k)) { if (JSON.stringify(state[k]) !== JSON.stringify(v)) kept++; } else { state[k] = v; added++; }
+        });
+      } catch (e) { bad++; }
+      if (--left === 0) finishImport();
+    };
+    rd.onerror = function () { bad++; if (--left === 0) finishImport(); };
+    rd.readAsText(file);
+  });
+  function finishImport() {
+    /* Giữ giới hạn số việc “Cần ngay” sau khi gộp */
+    var over = countNow() - LIMIT_NOW;
+    save(); render(false);
+    var msg = 'Đã nhập ' + added + ' câu trả lời.';
+    if (kept) msg += ' ' + kept + ' câu đã có trả lời khác trên thiết bị này nên được giữ nguyên.';
+    if (bad) msg += ' ' + bad + ' file không phải file kết quả của phiếu này nên bị bỏ qua.';
+    if (over > 0) msg += ' Sau khi gộp có ' + (over + LIMIT_NOW) + ' việc “' + NOW + '”, nhiều hơn mức ' + LIMIT_NOW + ': hãy đổi bớt ở Phần 2, 3, 4.';
+    say('msg-in', msg);
+  }
+}
+function printAll() {
+  var rows = readable(), html = '<div class="rv"><h1>Phiếu khảo sát nhu cầu ứng dụng trợ lý AI</h1><p>Công ty TNHH Hóa chất Thành Thịnh</p>', last = null;
+  rows.forEach(function (r) {
+    if (r.part !== last) { if (last !== null) html += '</dl>'; html += '<h2>' + esc(r.part) + '</h2><dl>'; last = r.part; }
+    html += '<dt>' + (r.code ? esc(r.code) + ' ' : '') + esc(r.question) + '</dt><dd' + (r.answer ? '' : ' class="none"') + '>' + (r.answer ? esc(r.answer) : 'Chưa trả lời') + '</dd>';
+  });
+  if (last !== null) html += '</dl>';
+  document.getElementById('print-root').innerHTML = html + '</div>';
+  window.print();
+}
+
+window.addEventListener('hashchange', function () { render(true); });
+load(); render(false); showSaved();
+if (!filled('__seen')) { document.getElementById('saved').textContent = storageOk ? 'Câu trả lời sẽ được lưu trên thiết bị này khi bạn điền.' : 'Thiết bị này không cho lưu tạm. Hãy tải file kết quả trước khi đóng trang.'; }
+})();
+</script>
+</body>
+</html>
